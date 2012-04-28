@@ -1,0 +1,18 @@
+tempAddToNotebook.txt
+
+
+Ambiguity
+
+For now.... we will use a "first matched definition wins" apparoach
+i.e. the ordering of definitions is important
+
+
+
+
+String snipping
+
+	def t_string(token)
+		r'"[^"]"'
+		token.value = token.value[1:-1]
+		return token
+
