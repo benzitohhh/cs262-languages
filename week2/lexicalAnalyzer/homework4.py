@@ -47,10 +47,19 @@ tokens = (
         'STRING',       
 )
 
-#
-# Write your code here. 
-#
+def t_IDENTIFIER(t):
+    r'[a-zA-Z][a-zA-Z_]*'
+    return t
 
+def t_NUMBER(t):
+    r'-?[0-9]+(?:\.[0-9]+)?'
+    t.value = float(t.value)
+    return t
+
+def t_STRING(t):
+    r'"(?:[^\\"]|(?:\\"))*"'
+    t.value = t.value[1:-1]
+    return t
 
 t_ignore                = ' \t\v\r' # whitespace 
 
