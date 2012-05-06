@@ -51,50 +51,30 @@
 #
 # Hint 3: all([True,False,True]) = False
 #         any([True,True,False]) = True
-import ipdb
 
 def cfgempty(grammar,symbol,visited):
-    if symbol in visited:
-        return None
-    visited.append(symbol)
-    
-    rules = [rule[1] for rule in grammar if rule[0] == symbol]
-    if not rules:
-        # it's a terminal
-        return [symbol]
-    
-    for rule in rules:
-        res = [cfgempty(grammar, s, visited) for s in rule]
-        if all([r != None for r in res]):
-            # concatentate
-            c = []
-            for r in res:
-                c += r
-            return c 
-        
-    return None
-
+    # Insert code here!
+                    
 # We have provided a few test cases for you. You will likely want to add
 # more of your own. 
 
-# grammar1 = [ 
-#       ("S", [ "P", "a" ] ),           
-#       ("P", [ "S" ]) ,               
-#       ] 
-#                         
-# print cfgempty(grammar1,"S",[])
-# print cfgempty(grammar1,"S",[]) == None 
-# 
-# grammar2 = [
-#       ("S", ["P", "a" ]),             
-#       ("S", ["Q", "b" ]),             
-#       ("P", ["P"]), 
-#       ("Q", ["c", "d"]),              
-#       ] 
-#  
-# print cfgempty(grammar2,"S",[]) == ['c', 'd', 'b']
-# 
-# 
+grammar1 = [ 
+      ("S", [ "P", "a" ] ),           
+      ("P", [ "S" ]) ,               
+      ] 
+                        
+print cfgempty(grammar1,"S",[]) == None 
+
+grammar2 = [
+      ("S", ["P", "a" ]),             
+      ("S", ["Q", "b" ]),             
+      ("P", ["P"]), 
+      ("Q", ["c", "d"]),              
+      ] 
+
+print cfgempty(grammar2,"S",[]) == ['c', 'd', 'b']
+
+
 grammar3 = [  # some Spanish provinces
         ("S", [ "Barcelona", "P", "Huelva"]),
         ("S", [ "Q" ]),
@@ -105,9 +85,5 @@ grammar3 = [  # some Spanish provinces
         ("R", [ ]) ,
         ("R", [ "R"]), 
         ]
-        
-# print cfgempty(grammar3,"T",[])
-# print cfgempty(grammar3,"P",[])
-# print cfgempty(grammar3,"S",[])
 
 print cfgempty(grammar3,"S",[]) == ['Barcelona', 'Las Palmas', 'Madrid', 'Huelva']
