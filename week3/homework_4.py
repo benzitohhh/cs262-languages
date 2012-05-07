@@ -64,8 +64,8 @@
 def cfginfinite(grammar): 
     # Put your code here!
     
-    
-    
+def hasLoop(grammar, tSymbol, symbols, visited):
+    if 
     
     
     
