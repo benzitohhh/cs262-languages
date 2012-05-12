@@ -7,6 +7,7 @@
 # involved shifting over the c if c matches the ith token.
 
 def shift (tokens, i, x, ab, cd, j):
-    # Insert code here
-    
+    if cd != [] and tokens[i] == cd[0]:
+    	return (x, ab + [cd[0]], cd[1:], j)
+    return None
 

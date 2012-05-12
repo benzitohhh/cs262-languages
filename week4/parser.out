@@ -1,0 +1,183 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    OROR
+    TIMES
+    RETURN
+    STRING
+    TRUE
+    MINUS
+    RBRACE
+    LE
+    SEMICOLON
+    LT
+    PLUS
+    EQUALEQUAL
+    FUNCTION
+    GT
+    DIVIDE
+    EQUAL
+    GE
+    VAR
+    ELSE
+    IF
+    ANDAND
+    LBRACE
+    FALSE
+    NOT
+
+Grammar
+
+Rule 0     S' -> exp
+Rule 1     exp -> IDENTIFIER LPAREN optargs RPAREN
+Rule 2     exp -> NUMBER
+Rule 3     optargs -> args
+Rule 4     optargs -> <empty>
+Rule 5     args -> exp COMMA args
+Rule 6     args -> exp
+
+Terminals, with rules where they appear
+
+ANDAND               : 
+COMMA                : 5
+DIVIDE               : 
+ELSE                 : 
+EQUAL                : 
+EQUALEQUAL           : 
+FALSE                : 
+FUNCTION             : 
+GE                   : 
+GT                   : 
+IDENTIFIER           : 1
+IF                   : 
+LBRACE               : 
+LE                   : 
+LPAREN               : 1
+LT                   : 
+MINUS                : 
+NOT                  : 
+NUMBER               : 2
+OROR                 : 
+PLUS                 : 
+RBRACE               : 
+RETURN               : 
+RPAREN               : 1
+SEMICOLON            : 
+STRING               : 
+TIMES                : 
+TRUE                 : 
+VAR                  : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+args                 : 3 5
+exp                  : 5 6 0
+optargs              : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . exp
+    (1) exp -> . IDENTIFIER LPAREN optargs RPAREN
+    (2) exp -> . NUMBER
+
+    IDENTIFIER      shift and go to state 3
+    NUMBER          shift and go to state 2
+
+    exp                            shift and go to state 1
+
+state 1
+
+    (0) S' -> exp .
+
+
+
+state 2
+
+    (2) exp -> NUMBER .
+
+    $end            reduce using rule 2 (exp -> NUMBER .)
+    COMMA           reduce using rule 2 (exp -> NUMBER .)
+    RPAREN          reduce using rule 2 (exp -> NUMBER .)
+
+
+state 3
+
+    (1) exp -> IDENTIFIER . LPAREN optargs RPAREN
+
+    LPAREN          shift and go to state 4
+
+
+state 4
+
+    (1) exp -> IDENTIFIER LPAREN . optargs RPAREN
+    (3) optargs -> . args
+    (4) optargs -> .
+    (5) args -> . exp COMMA args
+    (6) args -> . exp
+    (1) exp -> . IDENTIFIER LPAREN optargs RPAREN
+    (2) exp -> . NUMBER
+
+    RPAREN          reduce using rule 4 (optargs -> .)
+    IDENTIFIER      shift and go to state 3
+    NUMBER          shift and go to state 2
+
+    args                           shift and go to state 5
+    exp                            shift and go to state 6
+    optargs                        shift and go to state 7
+
+state 5
+
+    (3) optargs -> args .
+
+    RPAREN          reduce using rule 3 (optargs -> args .)
+
+
+state 6
+
+    (5) args -> exp . COMMA args
+    (6) args -> exp .
+
+    COMMA           shift and go to state 8
+    RPAREN          reduce using rule 6 (args -> exp .)
+
+
+state 7
+
+    (1) exp -> IDENTIFIER LPAREN optargs . RPAREN
+
+    RPAREN          shift and go to state 9
+
+
+state 8
+
+    (5) args -> exp COMMA . args
+    (5) args -> . exp COMMA args
+    (6) args -> . exp
+    (1) exp -> . IDENTIFIER LPAREN optargs RPAREN
+    (2) exp -> . NUMBER
+
+    IDENTIFIER      shift and go to state 3
+    NUMBER          shift and go to state 2
+
+    args                           shift and go to state 10
+    exp                            shift and go to state 6
+
+state 9
+
+    (1) exp -> IDENTIFIER LPAREN optargs RPAREN .
+
+    $end            reduce using rule 1 (exp -> IDENTIFIER LPAREN optargs RPAREN .)
+    COMMA           reduce using rule 1 (exp -> IDENTIFIER LPAREN optargs RPAREN .)
+    RPAREN          reduce using rule 1 (exp -> IDENTIFIER LPAREN optargs RPAREN .)
+
+
+state 10
+
+    (5) args -> exp COMMA args .
+
+    RPAREN          reduce using rule 5 (args -> exp COMMA args .)
+
