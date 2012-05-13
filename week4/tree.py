@@ -1,98 +1,44 @@
-# QUIZ
+# represent as tuples:   (left_child, content, right_child)
+# no child? use None
+import pprint
 
-# JavaScript allows function calls:
-#   myfun(11,12)
+def insert(tree, element):
+    # base case - insert into an empty tree
+    if tree == None:
+        return (None, element, None)
+    else:
+        # recursively update
+        left_child, this_element, right_child = tree
+        if element <= this_element:
+            new_left_child = insert(left_child, element)
+            return (new_left_child, this_element, right_child)
+        else:
+            new_right_child = insert(right_child, element)
+            return (left_child, this_element, new_right_child)
 
+def contains(tree, element):
+    if tree == None:
+        return False
+    else:
+        left_child, this_element, right_child = tree
+        if this_element == element:
+            return True
+        elif element <= this_element:
+            return contains(left_child, element)
+        else:
+            return contains(right_child, element)
 
-# We want the parse tree to be:
-#   ("call", "myfun", [("number", 11), ("number", 12)])
-
-import jstokens
-import jsgrammar
-import ply.lex as lex
-import ply.yacc as yacc
-
-start = 'exp'
-
-precedence = (
-        ('left', 'OROR'), 
-        ('left', 'ANDAND'), 
-        ('left', 'EQUALEQUAL'), 
-        ('left', 'LT', 'LE', 'GT', 'GE'), 
-        ('left', 'PLUS', 'MINUS'), 
-        ('left', 'TIMES', 'DIVIDE'), 
-        ('right', 'NOT'),
-) 
-
-tokens = (
-        'ANDAND',       # &&
-        'COMMA',        # ,
-        'DIVIDE',       # /
-        'ELSE',         # else
-        'EQUAL',        # =
-        'EQUALEQUAL',   # ==
-        'FALSE',        # false
-        'FUNCTION',     # function
-        'GE',           # >=
-        'GT',           # >
-        'IDENTIFIER',   # factorial
-        'IF',           # if
-        'LBRACE',       # {
-        'LE',           # <=
-        'LPAREN',       # (
-        'LT',           # <
-        'MINUS',        # -
-        'NOT',          # !
-        'NUMBER',       # 1234 5.678
-        'OROR',         # ||
-        'PLUS',         # +
-        'RBRACE',       # }
-        'RETURN',       # return
-        'RPAREN',       # )
-        'SEMICOLON',    # ;
-        'STRING',       # "this is a \"tricky\" string"
-        'TIMES',        # *
-        'TRUE',         # TRUE
-        'VAR',          # var 
-) 
-
-
-def p_exp_call(p):
-    'exp : IDENTIFIER LPAREN optargs RPAREN'
-    p[0] = ("call", p[1], p[3])
+elements = [2,4,16,13, 19, 24]
+t = insert(None, 5)
+for e in elements:
+    t = insert(t, e)
+    pprint.pprint(t)
+   
+print
+print contains(t, 5)
+for e in elements:
+    print "contains(t, " + str(e) + ") = ", contains(t, e)
+for e in [77,44,22]:
+    print "contains(t, " + str(e) + ") = ", contains(t, e)
     
-def p_exp_number(p):
-    'exp : NUMBER'
-    p[0] = ("number", p[1])
-    
-def p_optargs(p):
-    'optargs : args'
-    p[0] = p[1]
-
-def p_optargs_empty(p):
-	'optargs : '
-	p[0] = []
-
-def p_args(p):
-	'args : exp COMMA args'
-	p[0] = [ p[1] ] + p[3]
-
-def p_args_last(p):
-	'args : exp'
-	p[0] = [ p[1] ]
-
-
-    
-# you define more!
-
-
-
-def p_error(p):
-    print "Syntax error in input!"
-
-
-# here's some code to test with
-jslexer = lex.lex(module=jstokens)
-jsparser = yacc.yacc() 
-jsast = jsparser.parse("myfun(11,12)",lexer=jslexer) 
-print jsast
+  
