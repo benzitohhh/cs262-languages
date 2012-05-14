@@ -108,6 +108,8 @@ import ply.lex as lex
 import jstokens                 # use our JavaScript lexer
 from jstokens import tokens     # use our JavaScript tokens
 
+import pprint
+
 start = 'exp'    # we'll start at expression this time
 
 precedence = (
@@ -168,20 +170,18 @@ def p_exp_parens(p):
 ######################################################################
 
 def p_exp_binop(p):
-    # pass
-    'exp : exp OROR exp'
-    # p[0] =  ("binop", p[1], p[2], p[3])
-    # || exp: exp ANDAND exp \
-    # || exp: exp EQUALEQUAL exp \
-    # || exp: exp LT exp \
-    # || exp: exp GT exp \
-    # || exp: exp LE exp \
-    # || exp: exp GE exp \
-    # || exp: exp PLUS exp \
-    # || exp: exp MINUS exp \
-    # || exp: exp TIMES exp \
-    # || exp: exp DIVIDE exp"""
-
+    '''exp : exp OROR exp
+           | exp ANDAND exp
+           | exp EQUALEQUAL exp
+           | exp LT exp 
+           | exp GT exp 
+           | exp LE exp 
+           | exp GE exp 
+           | exp PLUS exp
+           | exp MINUS exp 
+           | exp TIMES exp 
+           | exp DIVIDE exp'''
+    p[0] =  ("binop", p[1], p[2], p[3])
 
 def p_exp_func_call(p):
     'exp : IDENTIFIER LPAREN optargs RPAREN'
@@ -231,7 +231,8 @@ print test_parser(jstext3) == jstree3
 
 # String and boolean constants, comparisons.
 jstext4 = ' "hello" == "goodbye" || true && false '
-jstree4 = ('binop', ('binop', ('string', 'hello'), '==', ('string', 'goodbye')), '||', ('binop', ('true', 'true'), '&&', ('false', 'true')))
+# jstree4 = ('binop', ('binop', ('string', 'hello'), '==', ('string', 'goodbye')), '||', ('binop', ('true', 'true'), '&&', ('false', 'true')))
+jstree4 = ('binop', ('binop', ('string', 'hello'), '==', ('string', 'goodbye')), '||', ('binop', ('true', 'true'), '&&', ('false', 'false')))
 print test_parser(jstext4) == jstree4
 
 # Not, precedence, associativity.
