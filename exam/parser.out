@@ -1,0 +1,218 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> exp
+Rule 1     exp -> NUMBER
+Rule 2     exp -> LPAREN exp RPAREN
+Rule 3     exp -> LPAREN tupleparams RPAREN
+Rule 4     tupleparams -> exp COMMA exp
+Rule 5     tupleparams -> exp COMMA tupleparams
+Rule 6     exp -> LBRACKET listparams RBRACKET
+Rule 7     listparams -> exp
+Rule 8     listparams -> exp COMMA listparams
+
+Terminals, with rules where they appear
+
+COMMA                : 4 5 8
+LBRACKET             : 6
+LPAREN               : 2 3
+NUMBER               : 1
+RBRACKET             : 6
+RPAREN               : 2 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+exp                  : 2 4 4 5 7 8 0
+listparams           : 6 8
+tupleparams          : 3 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . exp
+    (1) exp -> . NUMBER
+    (2) exp -> . LPAREN exp RPAREN
+    (3) exp -> . LPAREN tupleparams RPAREN
+    (6) exp -> . LBRACKET listparams RBRACKET
+
+    NUMBER          shift and go to state 2
+    LPAREN          shift and go to state 4
+    LBRACKET        shift and go to state 3
+
+    exp                            shift and go to state 1
+
+state 1
+
+    (0) S' -> exp .
+
+
+
+state 2
+
+    (1) exp -> NUMBER .
+
+    $end            reduce using rule 1 (exp -> NUMBER .)
+    COMMA           reduce using rule 1 (exp -> NUMBER .)
+    RBRACKET        reduce using rule 1 (exp -> NUMBER .)
+    RPAREN          reduce using rule 1 (exp -> NUMBER .)
+
+
+state 3
+
+    (6) exp -> LBRACKET . listparams RBRACKET
+    (7) listparams -> . exp
+    (8) listparams -> . exp COMMA listparams
+    (1) exp -> . NUMBER
+    (2) exp -> . LPAREN exp RPAREN
+    (3) exp -> . LPAREN tupleparams RPAREN
+    (6) exp -> . LBRACKET listparams RBRACKET
+
+    NUMBER          shift and go to state 2
+    LPAREN          shift and go to state 4
+    LBRACKET        shift and go to state 3
+
+    listparams                     shift and go to state 5
+    exp                            shift and go to state 6
+
+state 4
+
+    (2) exp -> LPAREN . exp RPAREN
+    (3) exp -> LPAREN . tupleparams RPAREN
+    (1) exp -> . NUMBER
+    (2) exp -> . LPAREN exp RPAREN
+    (3) exp -> . LPAREN tupleparams RPAREN
+    (6) exp -> . LBRACKET listparams RBRACKET
+    (4) tupleparams -> . exp COMMA exp
+    (5) tupleparams -> . exp COMMA tupleparams
+
+    NUMBER          shift and go to state 2
+    LPAREN          shift and go to state 4
+    LBRACKET        shift and go to state 3
+
+    exp                            shift and go to state 8
+    tupleparams                    shift and go to state 7
+
+state 5
+
+    (6) exp -> LBRACKET listparams . RBRACKET
+
+    RBRACKET        shift and go to state 9
+
+
+state 6
+
+    (7) listparams -> exp .
+    (8) listparams -> exp . COMMA listparams
+
+    RBRACKET        reduce using rule 7 (listparams -> exp .)
+    COMMA           shift and go to state 10
+
+
+state 7
+
+    (3) exp -> LPAREN tupleparams . RPAREN
+
+    RPAREN          shift and go to state 11
+
+
+state 8
+
+    (2) exp -> LPAREN exp . RPAREN
+    (4) tupleparams -> exp . COMMA exp
+    (5) tupleparams -> exp . COMMA tupleparams
+
+    RPAREN          shift and go to state 13
+    COMMA           shift and go to state 12
+
+
+state 9
+
+    (6) exp -> LBRACKET listparams RBRACKET .
+
+    $end            reduce using rule 6 (exp -> LBRACKET listparams RBRACKET .)
+    COMMA           reduce using rule 6 (exp -> LBRACKET listparams RBRACKET .)
+    RBRACKET        reduce using rule 6 (exp -> LBRACKET listparams RBRACKET .)
+    RPAREN          reduce using rule 6 (exp -> LBRACKET listparams RBRACKET .)
+
+
+state 10
+
+    (8) listparams -> exp COMMA . listparams
+    (7) listparams -> . exp
+    (8) listparams -> . exp COMMA listparams
+    (1) exp -> . NUMBER
+    (2) exp -> . LPAREN exp RPAREN
+    (3) exp -> . LPAREN tupleparams RPAREN
+    (6) exp -> . LBRACKET listparams RBRACKET
+
+    NUMBER          shift and go to state 2
+    LPAREN          shift and go to state 4
+    LBRACKET        shift and go to state 3
+
+    listparams                     shift and go to state 14
+    exp                            shift and go to state 6
+
+state 11
+
+    (3) exp -> LPAREN tupleparams RPAREN .
+
+    $end            reduce using rule 3 (exp -> LPAREN tupleparams RPAREN .)
+    COMMA           reduce using rule 3 (exp -> LPAREN tupleparams RPAREN .)
+    RBRACKET        reduce using rule 3 (exp -> LPAREN tupleparams RPAREN .)
+    RPAREN          reduce using rule 3 (exp -> LPAREN tupleparams RPAREN .)
+
+
+state 12
+
+    (4) tupleparams -> exp COMMA . exp
+    (5) tupleparams -> exp COMMA . tupleparams
+    (1) exp -> . NUMBER
+    (2) exp -> . LPAREN exp RPAREN
+    (3) exp -> . LPAREN tupleparams RPAREN
+    (6) exp -> . LBRACKET listparams RBRACKET
+    (4) tupleparams -> . exp COMMA exp
+    (5) tupleparams -> . exp COMMA tupleparams
+
+    NUMBER          shift and go to state 2
+    LPAREN          shift and go to state 4
+    LBRACKET        shift and go to state 3
+
+    exp                            shift and go to state 15
+    tupleparams                    shift and go to state 16
+
+state 13
+
+    (2) exp -> LPAREN exp RPAREN .
+
+    $end            reduce using rule 2 (exp -> LPAREN exp RPAREN .)
+    COMMA           reduce using rule 2 (exp -> LPAREN exp RPAREN .)
+    RBRACKET        reduce using rule 2 (exp -> LPAREN exp RPAREN .)
+    RPAREN          reduce using rule 2 (exp -> LPAREN exp RPAREN .)
+
+
+state 14
+
+    (8) listparams -> exp COMMA listparams .
+
+    RBRACKET        reduce using rule 8 (listparams -> exp COMMA listparams .)
+
+
+state 15
+
+    (4) tupleparams -> exp COMMA exp .
+    (4) tupleparams -> exp . COMMA exp
+    (5) tupleparams -> exp . COMMA tupleparams
+
+    RPAREN          reduce using rule 4 (tupleparams -> exp COMMA exp .)
+    COMMA           shift and go to state 12
+
+
+state 16
+
+    (5) tupleparams -> exp COMMA tupleparams .
+
+    RPAREN          reduce using rule 5 (tupleparams -> exp COMMA tupleparams .)
+
